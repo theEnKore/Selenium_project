@@ -1,6 +1,6 @@
 from .base_page import BasePage
 from selenium.webdriver.common.by import By
-from .locators import MainPageLocators
+from .locators import LoginPageLocators
 
 class LoginPage(BasePage):
     def should_be_login_page(self):
