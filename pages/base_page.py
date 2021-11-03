@@ -3,6 +3,7 @@ from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from .locators import BasePageLocators
+import random
 
 class BasePage():
     def __init__(self, browser, url, timeout=10):
@@ -47,3 +48,16 @@ class BasePage():
 
     def open(self):
         self.browser.get(self.url)
+
+    def generate_user_data(self):
+        email = ""
+        password = ""
+        for _ in range(random.randint(5, 15)):
+            email += chr(random.randint(97, 122))
+        email += "@gmail.com"
+        for _ in range(random.randint(10, 20)):
+            password += chr(random.randint(33, 122))
+        return (email, password)
+
+    def should_be_authorized_user(self):
+        assert self.is_element_present(*BasePageLocators.USER_ICON), "User icon is not present, probably unauthorised user"

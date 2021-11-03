@@ -65,3 +65,23 @@ def test_guest_cant_see_product_in_basket_opened_from_product_page(browser):
     page.go_to_basket_page()
     basket_page = BasketPage(browser, browser.current_url)
     basket_page.should_be_empty_basket()
+
+class TestUserAddToBasketFromProductPage():
+    @pytest.fixture(scope="function", autouse=True)
+    def setup(self, browser):
+        link = "https://selenium1py.pythonanywhere.com/accounts/login/"
+        self.page = LoginPage(browser, link)
+        self.page.open()
+        self.page.register_new_user(*self.page.generate_user_data())
+        self.page.should_be_authorized_user()
+    
+    def test_user_cant_see_success_message(self, browser):
+        page = ProductPage(browser, link)
+        page.open()
+        assert page.is_not_element_present(*ProductPageLocators.ADD_SUCCESS_ITEM), "Item added to cart message is present, but shouldn't"
+
+    def test_user_can_add_product_to_basket(self, browser):
+        page = ProductPage(browser, link)
+        page.open()
+        page.add_item_to_cart()
+        page.should_be_messages()
