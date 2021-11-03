@@ -47,4 +47,4 @@ class ProductPage(BasePage):
             print(f"Your code: {alert_text}")
             alert.accept()
         except NoAlertPresentException:
-            print("No second alert presented")
+            print("No second alert present")
