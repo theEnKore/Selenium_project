@@ -35,6 +35,12 @@ class ProductPage(BasePage):
         item_price = self.browser.find_element(*ProductPageLocators.ITEM_PRICE).text
         assert cart_total == item_price, "Cart total is different from item price"
 
+    def should_not_be_success_message(self):
+        assert self.is_not_element_present(*ProductPageLocators.ADD_SUCCESS_ITEM), "Success message is present, but shouldn't be"
+
+    def should_not_disappear_success_message(self):
+        assert self.is_disappeared(*ProductPageLocators.ADD_SUCCESS_ITEM), "Success message didn't disappear"
+
     def solve_quiz_and_get_code(self):
         alert = self.browser.switch_to.alert
         x = alert.text.split(" ")[2]
